@@ -1,0 +1,22 @@
+{
+  "name": "base_theme",
+  "version": "0.0.1",
+  "homepage": "http://.sla.devs.pessac.systonic.fr/",
+  "author": "",
+  "devDependencies": {
+    "autoprefixer": "^7.1.1",
+    "drupal-breakpoints-scss": "latest",
+    "node-sass": "^4.5.3",
+    "postcss-cli": "^4.0.0",
+    "watch": "latest"
+  },
+  "scripts": {
+    "build:css": "npm run css:clean && npm run css:breakpoint && npm run css:scss && npm run css:autoprefix",
+    "build": "npm run build:css",
+    "css:autoprefix": "postcss --use autoprefixer --dir css css/*.css",
+    "css:breakpoint": "node js/breakpoints.js",
+    "css:clean": "find css/ -maxdepth 1 ! -name 'custom*.css' -type f -exec rm -f {} +",
+    "css:scss": "node-sass --output-style compressed --source-map true --output css/ scss/",
+    "watch": "watch 'npm run build' ./scss"
+  }
+}

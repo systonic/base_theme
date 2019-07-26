@@ -1,0 +1,15 @@
+<a href="{{ url }}">
+  {% block picture %}
+    {{ content.field_visuel.0 }}
+  {% endblock %}
+
+  {% block title %}
+    <h2>{{ label.0 }}</h2>
+  {% endblock %}
+
+  {% block content %}
+    <div class="desc">
+      {{ content.body.0 }}
+    </div>
+  {% endblock %}
+</a>

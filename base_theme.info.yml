@@ -1,0 +1,22 @@
+name: Base theme
+type: theme
+description: '.'
+version: VERSION
+core: 8.x
+base theme: stable
+
+libraries:
+  - base_theme/global-styling
+
+#stylesheets-remove:
+#  - normalize.css
+#  - system.theme.css
+
+regions:
+  header: Header
+  content: Content
+  footer: Footer
+  disabled: Disabled
+
+ckeditor_stylesheets:
+  - css/ckeditor.css

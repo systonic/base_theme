@@ -1,0 +1,24 @@
+{% if attributes.class|length -%}
+  <div{{ attributes }}>
+{% endif %}
+  {% if title %}
+    <h3>{{ title }}</h3>
+  {% endif %}
+
+  {% block list %}
+    <{{ list.type }}{{ list.attributes }}>
+
+      {% for row in rows %}
+        {% block row %}
+          <li{{ row.attributes }}>
+            {{- row.content -}}
+          </li>
+        {% endblock %}
+      {% endfor %}
+
+    </{{ list.type }}>
+  {% endblock %}
+
+{% if attributes.class|length -%}
+  </div>
+{% endif %}

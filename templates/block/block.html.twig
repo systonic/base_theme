@@ -1,0 +1,21 @@
+{% if attributes -%}
+  <{{ block_type|default('div') }}{{ attributes }}>
+    {{ title_prefix }}
+    {{ title_suffix }}
+{% endif %}
+
+  {% if label %}
+    <{{ title_type|default('h2') }}{{ title_attributes }}>
+      {% block title %}
+        {{ label }}
+      {% endblock %}
+    </{{ title_type|default('h2') }}>
+  {% endif %}
+
+  {% block content %}
+    {{ content }}
+  {% endblock %}
+
+{% if attributes -%}
+  </{{ block_type|default('div') }}>
+{% endif %}

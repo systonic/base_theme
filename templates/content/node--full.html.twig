@@ -1,0 +1,22 @@
+{% extends "node.html.twig" %}
+{% set attributes = attributes.addClass('section section-edito') %}
+{% set block_type = 'section' %}
+
+{% set form = node.field_formulaire.value %}
+{% set visuel = node.field_visuel.value %}
+
+{% block title %}
+  {% if not form or not visuel %}
+    <h1 class="page-section-t1">
+      {{ label.0 }}
+    </h1>
+  {% endif %}
+{% endblock %}
+
+{% if form %}
+  {% block content %}
+    <div class="content">
+      {{ content }}
+    </div>
+  {% endblock %}
+{% endif %}

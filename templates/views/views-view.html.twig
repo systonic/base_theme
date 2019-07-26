@@ -1,0 +1,47 @@
+{% if attributes.class|length -%}
+  {%
+    set classes = [
+      dom_id ? 'js-view-dom-id-' ~ dom_id,
+    ]
+  %}
+  <{{ block_type|default('div') }}{{ attributes.addClass(classes) }}>
+    {{ title_prefix }}
+    {{ title_suffix }}
+{% endif %}
+
+  {% if title %}
+    <{{ title_type|default('h2') }}{{ title_attributes }}>
+      {% block title %}
+        {{ title }}
+      {% endblock %}
+    </{{ title_type|default('h2') }}>
+  {% endif %}
+
+  {% if header %}
+    <header>
+      {{ header }}
+    </header>
+  {% endif %}
+
+  {{ exposed }}
+  {{ attachment_before }}
+
+  {% block rows %}
+    {{ rows }}
+  {% endblock %}
+  {{ empty }}
+  {{ pager }}
+
+  {{ attachment_after }}
+  {{ more }}
+
+  {% if footer %}
+    <footer>
+      {{ footer }}
+    </footer>
+  {% endif %}
+
+  {{ feed_icons }}
+{% if attributes.class|length -%}
+  </{{ block_type|default('div') }}>
+{% endif %}

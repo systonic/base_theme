@@ -1,0 +1,39 @@
+{% if attributes -%}
+  <{{ block_type|default('div') }}{{ attributes }}>
+    {{ title_prefix }}
+    {{ title_suffix }}
+{% endif %}
+
+  {% block title %}
+    {% if not page %}
+      <{{ title_type|default('h2') }}{{ title_attributes }}>
+        {% block label %}
+          <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+        {% endblock %}
+      </{{ title_type|default('h2') }}>
+    {% endif %}
+  {% endblock %}
+
+  {% if display_submitted %}
+    <footer>
+      {{ author_picture }}
+      <div{{ author_attributes }}>
+        {% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}
+        {{ metadata }}
+      </div>
+    </footer>
+  {% endif %}
+
+  {% block content %}
+    {% if content_attributes is not empty -%}
+      <div{{ content_attributes }}>
+    {% endif %}
+      {{ content }}
+    {% if content_attributes is not empty -%}
+      </div>
+    {% endif %}
+  {% endblock %}
+
+{% if attributes -%}
+  </{{ block_type|default('div') }}>
+{% endif %}

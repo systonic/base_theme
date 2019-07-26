@@ -1,0 +1,26 @@
+<header id="sticky-header">
+  <div class="header-top">
+    <div class="header-section">
+	    
+    </div>
+  </div>
+
+	<div class="main-nav-cont">
+		<div class="header-nav header-section">
+			<a href="#" class="hamburger">
+				<span class="top"></span>
+				<span class="middle"></span>
+				<span class="bottom"></span>
+			</a>
+
+			<div class="logo">
+				<a href="{{ url('<front>') }}" class="logo-link" title="Vers la page d'accueil">
+					<img src="/{{ directory }}/logo-{{ language.getId() }}.svg" alt="">
+				</a>
+			</div>
+
+			{{ page.header }}
+		</div>
+	</div>
+</header>
+<div class="main-nav-mask"></div>
