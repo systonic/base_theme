@@ -1,9 +1,9 @@
 {
-    "name": "systonic/base_profile",
-    "description": "Drupal 8 base profile.",
-    "type": "drupal-profile",
-    "keywords": ["php", "drupal", "profile"],
-    "homepage": "https://github.com/systonic/base_profile",
+    "name": "systonic/base_theme",
+    "description": "Drupal 8 base theme.",
+    "type": "drupal-theme",
+    "keywords": ["php", "drupal", "theme"],
+    "homepage": "https://github.com/systonic/base_theme",
     "license": "GPL-2.0-or-later",
     "authors": [
         {
