@@ -7,3 +7,5 @@ global-styling:
     js/script.js: {}
   dependencies:
     - core/jquery
+    - core/jquery.once
+    - core/drupal

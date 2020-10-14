@@ -1,0 +1,47 @@
+{%
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    label_display == 'inline' ? 'clearfix',
+  ]
+%}
+{%
+  set title_classes = [
+    label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
+%}
+
+{% if wrapper|default(true) -%}
+  <{{ wrapper_type|default('div') }}{{ attributes.addClass(classes) }}>
+    {{ title_suffix.contextual_links }}
+{%- endif %}
+
+  {% if not label_hidden -%}
+    <{{ title_type|default('span') }}{{ title_attributes.addClass(title_classes) }}>{{ label }}</{{ title_type|default('span') }}>
+  {%- endif %}
+
+  {% if multiple -%}
+    <{{ list_type|default('ul') }}>
+  {%- endif %}
+
+  {% for item in items %}
+    {% if multiple -%}
+      <{{ item_type|default('li') }}{{ item.attributes }}>
+    {%- endif %}
+
+      {% block content %}
+        {{ item.content }}
+      {% endblock %}
+
+    {% if multiple -%}
+      </{{ item_type|default('li') }}>
+    {%- endif %}
+  {% endfor %}
+
+  {% if multiple -%}
+    </{{ list_type|default('ul') }}>
+  {%- endif %}
+
+{% if wrapper|default(true) -%}
+  </{{ wrapper_type|default('div') }}>
+{%- endif %}

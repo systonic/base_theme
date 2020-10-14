@@ -1,0 +1,14 @@
+@import '../vendor/flexbox-grid-mixins';
+
+$grid-columns-nb: 12 !default;
+$grid-gutter: 1rem !default;
+
+.grid {
+	@include grid($gutter: $grid-gutter);
+
+	@for $i from 1 through $grid-columns-nb {
+		> .col-#{$i} {
+			@include grid-col($col: $i, $grid-columns: $grid-columns-nb, $gutter: $grid-gutter);
+		}
+	}
+}

@@ -1,0 +1,70 @@
+.view {
+
+  .pager {
+
+    .pager__item {
+      padding: 0 .6rem;
+
+      a {
+        border: 2px solid $color-blue;
+        color: $color-blue;
+        display: inline-block;
+        padding: 0.8rem 1.6rem;
+      }
+
+      &.is-active a {
+        background-color: $color-blue;
+        color: $color-white;
+      }
+
+      &.pager__item--first,
+      &.pager__item--last {
+        display: none;
+      }
+
+      &.pager__item--previous a,
+      &.pager__item--next a {
+        border: none;
+
+        span {
+          display: none;
+        }
+
+        &:after {
+          background-color: $color-blue;
+          content: '';
+          display: inline-block;
+          height: 0.8rem;
+          mask: url(../images/fleche_longue.svg);
+          width: 3.8rem;
+        }
+      }
+
+      &.pager__item--previous a:after {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &.view-display-id-page_list {
+    .view-content > ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      @include bp(desktop) {
+        @include grid($flex-flow: row wrap, $gutter: $grid-gutter);
+      }
+
+      > li {
+        clear: both;
+        margin-bottom: 4.8rem;
+
+        @include bp(desktop) {
+          @include grid-col($col: 3, $grid-columns: $grid-columns-nb, $gutter: $grid-gutter);
+          margin-bottom: 4.8rem;
+        }
+      }
+    }
+  }
+}

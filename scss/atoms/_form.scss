@@ -1,0 +1,15 @@
+label {
+  color: $color-default;
+  font-size: $size-default;
+}
+
+.form-text, .form-email, .form-textarea {
+  border: 2px solid;
+  color: $color-default;
+  padding: 1.5rem;
+  width: 100%;
+}
+
+.form-submit {
+  @extend .button;
+}

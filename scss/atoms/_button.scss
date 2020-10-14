@@ -1,0 +1,17 @@
+%button {
+  @include button-color($button-border-color, $button-hover-color);
+  border: $button-border;
+  display: inline-block;
+  font: $button-text-font;
+  padding: $button-padding;
+  text-decoration: none;
+  transition: all .35s ease;
+}
+
+/**
+ * CLASSE
+ */
+
+.button {
+  @extend %button;
+}

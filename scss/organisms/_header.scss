@@ -1,0 +1,160 @@
+body {
+  .js.layout-open & {
+    overflow: hidden;
+  }
+}
+
+header {
+  background: $color-white;
+  box-shadow: 0 0.4rem 7rem rgba($color-blue, 0.15);
+  z-index: 2;
+
+  > .region {
+    @include centered-layout;
+  }
+
+  @supports (display: grid) {
+    .js & {
+      height: $header-height;
+      left: 0;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      width: 100%;
+
+      @include bp(desktop) {
+        height: $header-height-desktop;
+        position: fixed;
+      }
+    }
+
+    .js .toolbar-fixed & {
+      //position: fixed;
+    }
+
+    .js .toolbar-vertical &,
+    .js .toolbar-horizontal & {
+      top: 39px;
+    }
+
+    .js .toolbar-horizontal.toolbar-tray-open & {
+      top: 79px;
+    }
+
+    .js.layout-open & {
+      height: 100vh;
+      overflow-y: scroll;
+    }
+
+    > .region {
+      display: grid;
+      grid-template-columns: 0 108px 0 auto 148px 0;
+      grid-template-rows: minmax($header-height, auto);
+      grid-template-areas:
+        "... logo ... search burger ..."
+        "baseline baseline baseline baseline baseline baseline"
+        "language language language language language language"
+        "menu menu menu menu menu menu"
+        "form form form form form form"
+        "partners partners partners partners partners partners";
+      align-content: start;
+
+      @include bp(desktop) {
+        grid-template-columns: 116px 216px auto 54px 148px 120px;
+        grid-template-rows: minmax($header-height-desktop, auto);
+        grid-template-areas:
+          "baseline logo partners search burger language"
+          "menu menu menu menu menu menu"
+          "form form form form form form";
+      }
+    }
+  }
+
+  .layout.baseline {
+    grid-area: baseline;
+  }
+
+  .layout.language {
+    grid-area: language;
+  }
+
+  .layout.menu,
+  .layout.search {
+    //.js body:not(.path-block) & { display: none; }
+    display: none;
+
+    body.path-block & {
+      display: block;
+    }
+
+    .js body &.open {
+      display: block;
+    }
+  }
+
+  .layout.menu {
+    grid-area: menu;
+  }
+
+  .layout.search {
+    background-color: $color-blue;
+    color: $color-white;
+    grid-area: form;
+    min-height: 100%;
+    padding: 0 2.8rem 5.6rem;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1;
+
+    > .block {
+      margin: 0 auto;
+      max-width: 64rem;
+    }
+  }
+
+  .layout.partners {
+    grid-area: partners;
+  }
+}
+
+#block-logo {
+  grid-area: logo;
+}
+
+#block-searchtoggle {
+  display: none;
+  grid-area: search;
+
+  .js & {
+    display: flex;
+  }
+}
+
+#block-menutoggle {
+  display: none;
+  grid-area: burger;
+
+  .js & {
+    display: flex;
+  }
+}
+
+#block-menulayout {
+  @supports (display: contents) {
+    display: contents;
+  }
+}
+
+main {
+  @supports (display: grid) {
+    .js & {
+      padding-top: $header-height;
+
+      @include bp(desktop) {
+        padding-top: $header-height-desktop;
+      }
+    }
+  }
+}

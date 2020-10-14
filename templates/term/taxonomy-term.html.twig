@@ -1,0 +1,26 @@
+{%
+  set classes = [
+    'taxonomy-term',
+    'vocabulary-' ~ term.bundle|clean_class,
+    view_mode ? 'taxonomy-term--view-mode-' ~ view_mode|clean_class,
+  ]
+%}
+
+{% if wrapper|default(true) == true -%}
+  <{{ wrapper_type|default('div') }}{{ attributes.addClass(classes) }}>
+    {{ title_suffix.contextual_links }}
+{% endif %}
+
+  {% block content %}
+    {% if content_attributes is not empty -%}
+      <div{{ content_attributes }}>
+    {% endif %}
+      {{ content }}
+    {% if content_attributes is not empty -%}
+      </div>
+    {% endif %}
+  {% endblock %}
+
+{% if wrapper|default(true) == true -%}
+  </{{ wrapper_type|default('div') }}>
+{% endif %}

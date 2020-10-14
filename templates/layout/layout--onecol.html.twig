@@ -1,0 +1,13 @@
+{%
+  set classes = [
+    'layout',
+    'layout--onecol',
+    settings.label ? settings.label|clean_class,
+  ]
+%}
+
+{% if content %}
+  <div{{ attributes.addClass(classes) }}>
+    {{ content.content }}
+  </div>
+{% endif %}

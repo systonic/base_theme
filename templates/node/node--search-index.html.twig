@@ -1,0 +1,20 @@
+{% extends "node.html.twig" %}
+{% block content %}
+  {% if content_attributes is not empty -%}
+    <div{{ content_attributes }}>
+  {% endif %}
+
+  {% if content.field_resume.0 %}
+    {{ content|without('body') }}
+  {% else %}
+    {{ content }}
+  {% endif %}
+
+  {% if content_attributes is not empty -%}
+    </div>
+  {% endif %}
+
+  <div class="text-right">
+    <a href="{{ url }}" class="button">{{ 'Read more'|t }}</a>
+  </div>
+{% endblock %}

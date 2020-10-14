@@ -1,0 +1,22 @@
+%icon {
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  font-size: 0;
+  overflow: hidden;
+}
+
+/**
+ * CLASSE
+ */
+
+.icon {
+  @extend %icon;
+
+  &.loupe {
+    background-image: url(../images/loupe.svg);
+    height: 4rem;
+    width: 4rem;
+  }
+}

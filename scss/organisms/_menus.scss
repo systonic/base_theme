@@ -1,0 +1,54 @@
+header {
+
+  .layout.menu {
+
+    @include bp(desktop) {
+      background-color: $color-gray;
+      left: 0;
+      min-height: calc(100% - #{$header-height});
+      position: absolute;
+      right: 0;
+      top: $header-height-desktop;
+    }
+
+    .block-menu {
+
+      @include bp(desktop) {
+        @include centered-layout;
+        padding-left: 16rem;
+
+        &.menu--main {
+          padding-left: 14.4rem;
+        }
+      }
+
+      ul.menu {
+        margin: 0;
+      }
+    }
+  }
+
+  .block-language-blocklanguage-interface {
+    border-bottom: 1px solid rgba($color-blue, .3);
+    border-top: 1px solid rgba($color-blue, .3);
+    margin: 0 -2.8rem;
+    padding: 1rem 2.8rem;
+
+    @include bp(desktop) {
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .language-link {
+      color: $color-blue;
+      font-family: $family-default;
+      font-size: 1.6rem;
+      line-height: 125%;
+
+      @include bp(desktop) {
+        font-size: 1.9rem;
+      }
+    }
+  }
+}

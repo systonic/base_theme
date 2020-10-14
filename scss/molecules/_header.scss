@@ -1,0 +1,161 @@
+header .layout.baseline {
+
+  @include bp(desktop) {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .baseline-img {
+    display: none;
+
+    @include bp(desktop) {
+      display: block;
+    }
+  }
+
+  .baseline-txt {
+    color: $color-blue;
+    display: block;
+    font-family: $family-default;
+    font-size: 1.6rem;
+    line-height: 125%;
+    padding: 0.6rem 0;
+
+    @include bp(desktop) {
+      display: none;
+    }
+  }
+}
+
+#block-logo {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+header .layout.partners {
+  padding-bottom: 5.6rem;
+
+  @include bp(desktop) {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 0;
+  }
+
+  .field--name-body {
+    align-items: center;
+    display: flex;
+
+    @include bp(desktop) {
+      justify-content: center;
+    }
+
+    .field + .field {
+      margin-left: 1.6rem;
+    }
+  }
+}
+
+#block-searchtoggle {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+
+  .layout-toggle {
+    background-color: $color-blue;
+    border: none;
+    display: flex;
+    font-size: 0;
+    height: 2.2rem;
+    mask: url(../images/loupe.svg);
+    mask-repeat: no-repeat;
+    padding: 0;
+    position: relative;
+    width: 2.2rem;
+
+    &[aria-expanded="true"] {
+      background-color: $color-white;
+      mask-image: url(../images/close.svg);
+      z-index: 1;
+    }
+  }
+}
+
+#block-menutoggle {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  .layout-toggle {
+    background-color: transparent;
+    border: none;
+    color: $color-blue;
+    font-family: $family-default;
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 0.02rem;
+    line-height: 2.3rem;
+    outline: none;
+    padding: 0.6rem 5.2rem 0 0;
+    position: relative;
+
+    &:before,
+    &:after {
+      border-bottom: 0.3rem solid;
+      content: '';
+      position: absolute;
+      right: 1.7rem;
+      top: calc(50% + 0.4rem);
+      transition: all .5s;
+      width: 2.7rem;
+    }
+
+    &:before {
+      right: 0.2rem;
+      top: calc(50% - 0.4rem);
+      width: 4.2rem;
+    }
+
+    &[aria-expanded="true"] {
+
+      &:before {
+        right: 1.7rem;
+        top: 50%;
+        transform: rotate(-45deg);
+        width: 2.7rem;
+      }
+
+      &:after {
+        top: 50%;
+        transform: rotate(45deg);
+      }
+    }
+  }
+}
+
+header .layout.language {
+
+  @include bp(desktop) {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .language-switcher-language-url {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: inline-block;
+      padding-right: 1.6rem;
+
+      @include bp(desktop) {
+        padding-right: 1.4rem;
+      }
+    }
+  }
+}

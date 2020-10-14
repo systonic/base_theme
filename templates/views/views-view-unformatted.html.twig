@@ -1,0 +1,20 @@
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+
+{% for row in rows %}
+  {%
+    set row_classes = [
+      default_row_class ? 'views-row',
+    ]
+  %}
+  {% if row.attributes.class or default_row_class -%}
+    <div{{ row.attributes.addClass(row_classes) }}>
+  {% endif %}
+
+    {{- row.content -}}
+
+  {% if row.attributes.class or default_row_class -%}
+    </div>
+  {% endif %}
+{% endfor %}

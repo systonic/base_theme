@@ -5,58 +5,81 @@
  * Contains theme override and preprocess functions.
  */
 
-use Drupal\Views\ViewExecutable;
-use Drupal\Core\Url;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\taxonomy\TermInterface;
+/*
+use Drupal\Core\Render\Element;
+use Drupal\Core\Render\Markup;
 use Drupal\Core\Template\Attribute;
+use Drupal\Views\ViewExecutable;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+*/
 
 /**
- * Implements hook_views_pre_render().
+ * Implements hook_preprocess_HOOK().
  */
-function base_theme_views_pre_render(ViewExecutable $view) {
-  if ($view->id() == 'frontpage' && $view->current_display == 'page_1') {
-    // Use some or all of the following 3 lines to remove specific 'no results' behaviors
-    unset($view->empty['area_text_custom']);
-    unset($view->empty['node_listing_empty']);
-    unset($view->empty['title']);
-    unset($view->pager);
-    $view->result = [];
-    $view->feedIcons = [];
+function base_theme_preprocess_html(&$variables) {
+  // Get information about the currently loaded entitiy from the controller (if it is an entity):
+  $routeParameters = \Drupal::routeMatch()->getParameters();
+  if ($routeParameters->count() > 0) {
+    // We use the first parameter as dynamic indicator for the entity type to load (node,user,commerce_product, ...)
+    $entityTypeIndicator = \Drupal::routeMatch()->getParameters()->keys()[0];
+    $entity = \Drupal::routeMatch()->getParameter($entityTypeIndicator);
+    if (is_object($entity) && $entity instanceof ContentEntityInterface) {
+      if ($entity instanceof TermInterface) {
+        $voc = $entity->bundle();
+        $variables['attributes']['class'][] = "path-taxonomy-$voc";
+      }
+    }
+    if (is_string($entity)) {
+      $variables['attributes']['class'][] = "path-$entity";
+    }
   }
 }
 
 /**
  * Implements hook_preprocess_HOOK().
  */
-function base_theme_preprocess_html(&$variables) {
-  $current_path = \Drupal::service('path.current')->getPath();
-  $path_alias = \Drupal::service('path.alias_manager')->getAliasByPath($current_path);
-  $path_alias = ltrim($path_alias, '/');
-  $variables['attributes']['class'][] = \Drupal\Component\Utility\Html::cleanCssIdentifier($path_alias);
-
-  $variables['attributes']['class'][] = !$variables['root_path'] ? 'front' : 'not-front';
-}
-
-/**
- * Implements hook_preprocess_HOOK().
- */
+/*
 function base_theme_preprocess_page(&$variables) {
   $variables['attributes']['class'][] = 'page-content';
 }
+*/
 
 /**
  * Implements hook_preprocess_HOOK().
  */
+/*
 function base_theme_preprocess_menu(&$variables) {
   $current_path = \Drupal::request()->getRequestUri();
   _base_theme_menu_active_item($variables['items'], $current_path);
 }
+*/
 
 /**
  * Implements hook_preprocess_HOOK().
  */
+/*
+function base_theme_preprocess_menu_link_content(&$variables) {
+  if (isset($variables['menu_link_content']) && $url_object = $variables['menu_link_content']->getUrlObject()) {
+    $options = $url_object->getOptions();
+
+    if (isset($options['attributes'])) {
+      $variables['attributes'] = new Attribute($options['attributes']);
+    }
+  }
+}
+*/
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+/*
 function base_theme_preprocess_node(&$variables) {
+  $node = $variables['node'];
+
   if ($variables['view_mode'] == 'hero') {
-    if (!is_null($variables['node']->field_visuel->entity) && $uri = $variables['node']->field_visuel->entity->field_media_image->entity->uri->value) {
+    if (!is_null($node->field_visuel->entity) && $uri = $node->field_visuel->entity->field_media_image->entity->uri->value) {
       $settings = \Drupal::service('entity_type.manager')->getStorage('entity_view_display')->load('media.image.hero_inside')->getRenderer('field_media_image')->getSettings();
       if ($style = \Drupal::service('entity_type.manager')->getStorage('image_style')->load($settings['image_style'])) {
         $variables['bg'] = $style->buildUrl($uri);
@@ -64,48 +87,52 @@ function base_theme_preprocess_node(&$variables) {
     }
   }
 }
+*/
 
 /**
  * Implements hook_preprocess_HOOK().
  */
+/*
 function base_theme_preprocess_block(&$variables) {
-  //$elements = $variables['elements'];
+  $elements = $variables['elements'];
 }
+*/
 
 /**
  * Implements hook_preprocess_HOOK().
+ */
+/*
+function base_theme_preprocess_field(&$variables) {
+  $element = $variables['element'];
+}
+*/
+
+/**
+ * Implements hook_preprocess_HOOK() for views.
  */
 function base_theme_preprocess_views_view(&$variables) {
-  //if ($variables['view']->id() == '') {}
-}
+  $view = $variables['view'];
 
-/**
- * Implements hook_preprocess_HOOK().
- */
-function base_theme_preprocess_field(&$variables) {
-/*
-  $element = $variables['element'];
-  $classes = [];
-
-  if (isset($element['#entity_type']) && $element['#entity_type'] == 'media') {
-    switch ($element['#view_mode']) {
-      case '':
-        $classes = [''];
-        break;
-    }
-
-    if (!empty($classes)) {
-      foreach ($variables['items'] as $key => $value) {
-        $variables['items'][$key]['content']['#item_attributes']['class'] = $classes;
-      }
-    }
+  if ($view->getDisplay()->display['display_plugin'] === 'page') {
+    $variables['title'] = $view->getTitle();
   }
-*/
 }
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
+function base_theme_theme_suggestions_taxonomy_term_alter(&$suggestions, array $variables) {
+  $element = $variables['elements'];
+
+  if (isset($element['#view_mode'])) {
+    $suggestions[] = $variables['theme_hook_original'] . '__' . $element['#view_mode'];
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+/*
 function base_theme_theme_suggestions_container_alter(&$suggestions, array $variables) {
   $element = $variables['element'];
 
@@ -122,7 +149,7 @@ function base_theme_theme_suggestions_container_alter(&$suggestions, array $vari
     $suggestions = array_reverse($suggestions);
   }
 
-  if (isset($element['#type']) && $element['#type'] == 'actions') {
+  if (isset($element['#type']) && $element['#type'] == 'actions' && isset($element['submit'])) {
     $suggestions[] = $variables['theme_hook_original'] . '__' . str_replace('-', '_', $element['submit']['#id']);
   }
 
@@ -130,14 +157,34 @@ function base_theme_theme_suggestions_container_alter(&$suggestions, array $vari
     $suggestions[] = $variables['theme_hook_original'] . '__' . str_replace('-', '_', $element['#webform_id']);
   }
 }
+*/
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
+/*
+function base_theme_theme_suggestions_views_exposed_form_alter(&$suggestions, array $variables) {
+  if (!isset($variables['form'])) {
+    return;
+  }
+
+  $form = $variables['form'];
+
+  if (isset($form['#view_id']) && $form['#view_id'] === 'recherche') {
+    $suggestions[] = $variables['theme_hook_original'] . '__' . $form['#view_id'];
+    $suggestions[] = $variables['theme_hook_original'] . '__' . $form['#view_id'] . '__' . $form['#display_id'];
+  }
+}
+*/
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+/*
 function base_theme_theme_suggestions_form_alter(&$suggestions, array $variables) {
   $element = $variables['element'];
 
-  if (stripos($element['#id'], 'views-exposed-form-') === 0) {
+  if (stripos($element['#id'], 'views-exposed-form-') === 0 && isset($element['#view_id'])) {
     $suggestions[] = $variables['theme_hook_original'] . '__' . $element['#view_id'];
   }
 
@@ -146,10 +193,12 @@ function base_theme_theme_suggestions_form_alter(&$suggestions, array $variables
     $suggestions[] = $variables['theme_hook_original'] . '__' . $element['#form_id'];
   }
 }
+*/
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
+/*
 function base_theme_theme_suggestions_form_element_alter(&$suggestions, array $variables) {
   $element = $variables['element'];
 
@@ -161,10 +210,12 @@ function base_theme_theme_suggestions_form_element_alter(&$suggestions, array $v
     $suggestions[] = $variables['theme_hook_original'] . '__' . str_replace('-', '_', $element['#webform_id']);
   }
 }
+*/
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
+/*
 function base_theme_theme_suggestions_field_alter(&$suggestions, array $variables) {
   $element = $variables['element'];
 
@@ -172,17 +223,20 @@ function base_theme_theme_suggestions_field_alter(&$suggestions, array $variable
     $suggestions[] = $variables['theme_hook_original'] . '__' . $element['#entity_type'] . '__' . $element['#view_mode'];
   }
 }
+*/
 
 /**
  * .
  */
+/*
 function _base_theme_menu_active_item(&$items, $current_path) {
   foreach ($items as &$item) {
     if ($item['url']->toString() == $current_path) {
-			$item['is_active'] = TRUE;
-		}
-		elseif (count($item['below'])) {
-			_base_theme_menu_active_item($item['below'], $current_path);
-		}
+      $item['is_active'] = TRUE;
+    }
+    elseif (count($item['below'])) {
+      _base_theme_menu_active_item($item['below'], $current_path);
+    }
   }
 }
+*/

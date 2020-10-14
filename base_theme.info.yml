@@ -3,7 +3,7 @@ type: theme
 description: '.'
 version: VERSION
 core: 8.x
-base theme: stable
+base theme: classy
 
 libraries:
   - base_theme/global-styling
@@ -13,9 +13,12 @@ libraries:
 #  - system.theme.css
 
 regions:
+  before: Before
   header: Header
   content: Content
+  sidebar_first: 'Sidebar first'
   footer: Footer
+  after: After
   disabled: Disabled
 
 ckeditor_stylesheets:

@@ -1,0 +1,57 @@
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+  height: 100%;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+	color: $color-default;
+  font: $font-default;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: relative;
+  width: 100%;
+
+  &.cke_editable {
+    margin: 0 2rem;
+    width: auto;
+  }
+}
+
+p {
+	margin-bottom: $size-default;
+}
+
+img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+a {
+  .layout-container &:not([class*="button"]),
+  .cke_editable &:not([class*="button"]) {
+    @extend .link;
+  }
+
+	img {
+		border: 0;
+	}
+}
+
+ul {
+  padding: 0 0 0 2rem;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}

@@ -1,24 +1,20 @@
-{% if attributes.class|length -%}
+{% if attributes.class -%}
   <div{{ attributes }}>
 {% endif %}
   {% if title %}
     <h3>{{ title }}</h3>
   {% endif %}
 
-  {% block list %}
-    <{{ list.type }}{{ list.attributes }}>
+  <{{ list.type }}{{ list.attributes }}>
 
-      {% for row in rows %}
-        {% block row %}
-          <li{{ row.attributes }}>
-            {{- row.content -}}
-          </li>
-        {% endblock %}
-      {% endfor %}
+    {% for row in rows %}
+      <li{{ row.attributes }}>
+        {{- row.content -}}
+      </li>
+    {% endfor %}
 
-    </{{ list.type }}>
-  {% endblock %}
+  </{{ list.type }}>
 
-{% if attributes.class|length -%}
+{% if attributes.class -%}
   </div>
 {% endif %}

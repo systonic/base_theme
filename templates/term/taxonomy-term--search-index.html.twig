@@ -1,0 +1,14 @@
+{% extends "taxonomy-term.html.twig" %}
+{% block content %}
+  {% if content_attributes is not empty -%}
+    <div{{ content_attributes }}>
+  {% endif %}
+    {{ content }}
+  {% if content_attributes is not empty -%}
+    </div>
+  {% endif %}
+
+  <div class="text-right">
+    <a href="{{ url }}" class="button">{{ 'Read more'|t }}</a>
+  </div>
+{% endblock %}

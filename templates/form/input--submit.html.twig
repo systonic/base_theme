@@ -1,0 +1,7 @@
+<button {{ attributes }}>
+  {% if children -%}
+    {{ children }}
+  {% else -%}
+    {{ attributes.value|raw }}
+  {% endif %}
+</button>

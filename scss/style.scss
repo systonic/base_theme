@@ -1,6 +1,43 @@
 @charset 'utf-8';
 
 /*
- * Vendors
+ * Abstractions like variables, mixins, etc.
  */
-@import 'vendors/gridlex/gridlex';
+@import 'utils/easings';
+@import 'utils/mixins';
+@import 'utils/triangles';
+@import 'utils/variables';
+
+/*
+ * Common.
+ */
+@import 'common/reset';
+@import 'common/fonts';
+@import 'common/grid';
+@import 'vendor/gridlex/gridlex';
+
+/*
+ * Atoms.
+ */
+@import 'atoms/link';
+@import 'atoms/button';
+@import 'atoms/icon';
+@import 'atoms/title';
+@import 'atoms/form';
+
+/*
+ * Molecules.
+ */
+@import 'molecules/header';
+@import 'molecules/menu';
+@import 'molecules/view';
+@import 'molecules/search';
+@import 'molecules/article';
+@import 'molecules/evenement';
+@import 'molecules/edito';
+
+/*
+ * Organisms.
+ */
+@import 'organisms/header';
+@import 'organisms/menus';

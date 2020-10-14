@@ -1,0 +1,25 @@
+%link {
+  color: $link-color;
+  text-decoration: $link-decoration;
+  text-underline-offset: 4px;
+
+  &:hover,
+  &.is-active {
+    color: $link-hover-color;
+    text-decoration: $link-hover-decoration;
+  }
+
+  &:visited,
+  &:focus,
+  &:active {
+    color: darken($link-color, 20%);
+  }
+}
+
+/**
+ * CLASSE
+ */
+
+.link {
+  @extend %link;
+}

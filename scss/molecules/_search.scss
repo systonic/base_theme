@@ -1,0 +1,45 @@
+.layout.search {
+
+  .block-views-exposed-filter-blockrecherche-page-1 {
+
+    h2 {
+      display: none;
+    }
+
+    .form-item {
+      margin: 0;
+      width: 100%;
+    }
+
+    label {
+      color: $color-white;
+      display: block;
+      font-family: $family-default;
+      font-size: 1.9rem;
+      margin: 7.4rem 0 4.8rem;
+      opacity: 0.5;
+    }
+
+    .form-text {
+      background-color: transparent;
+      border: none;
+      border-bottom: 2px solid $color-gray;
+      color: $color-gray;
+      padding: 0.8rem 0;
+      width: 100%;
+    }
+
+    .form-actions {
+      margin: 0;
+      padding-top: 2.4rem;
+
+      button {
+        @include button-color($color-white, $color-red);
+      }
+    }
+  }
+}
+
+.node--view-mode-search-index,
+.taxonomy-term--view-mode-search-index {
+}

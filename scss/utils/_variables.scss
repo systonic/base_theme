@@ -1,0 +1,78 @@
+/**
+ * COLOR
+ */
+$color-black: black;
+$color-gray: lightgray;
+$color-white: white;
+$color-red: red;
+$color-green: green;
+$color-blue: blue;
+$color-default: $color-black;
+
+
+/**
+ * SIZE
+ */
+$size-default: 1.6rem;
+
+
+/**
+ * FAMILY
+ */
+$family-serif: serif;
+$family-sans-serif: sans-serif;
+$family-default: $family-sans-serif;
+$family-title: $family-serif;
+
+
+/**
+ * FONT
+ */
+$font-default: normal $size-default/1 $family-default;
+
+
+/**
+ * GRID
+ */
+$grid-columns-nb: 12;
+$grid-gutter: 2rem;
+
+$gl-colCount: $grid-columns-nb;
+$gl-gridName: gridlex;
+$gl-gutter: $grid-gutter;
+$gl-gutter-vertical: $grid-gutter;
+$gl-mq-width: 'min-width';
+$gl-mq-list: (md: 48rem, lg: 96rem, xl: 128rem);
+
+
+/**
+ * LAYOUT
+ */
+$layout-max-width: 128rem;
+$layout-padding: 0 2rem;
+
+
+/**
+ * HEADER
+ */
+$header-height: 5rem;
+$header-height-desktop: 10rem;
+
+
+/**
+ * BUTTON
+ */
+$button-border: 2px solid;
+$button-border-color: $color-red;
+$button-hover-color: $color-white;
+$button-padding: 2rem;
+$button-text-font: bold $size-default/1 $family-default;
+
+
+/**
+ * LINK
+ */
+$link-color: $color-blue;
+$link-decoration: none;
+$link-hover-color: $color-red;
+$link-hover-decoration: underline;

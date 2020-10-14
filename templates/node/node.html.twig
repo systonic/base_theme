@@ -1,0 +1,39 @@
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+  ]
+%}
+
+{% if wrapper|default(true) -%}
+  <{{ wrapper_type|default('div') }}{{ attributes.addClass(classes) }}>
+    {{ title_suffix.contextual_links }}
+{% endif %}
+
+  {% if display_submitted %}
+    <footer>
+      {{ author_picture }}
+      <div{{ author_attributes }}>
+        {% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}
+        {{ metadata }}
+      </div>
+    </footer>
+  {% endif %}
+
+  {% block content %}
+    {% if content_attributes is not empty -%}
+      <div{{ content_attributes }}>
+    {% endif %}
+      {{ content }}
+    {% if content_attributes is not empty -%}
+      </div>
+    {% endif %}
+  {% endblock %}
+
+{% if wrapper|default(true) -%}
+  </{{ wrapper_type|default('div') }}>
+{% endif %}
