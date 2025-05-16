@@ -1,5 +1,8 @@
 ignore:
   - '/base_theme.starterkit.yml'
+  - '/composer.json'
+  - '/LICENSE.txt'
+  - '/README.md'
 no_edit: []
 no_rename: []
 info:

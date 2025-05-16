@@ -24,23 +24,20 @@
     "build": "gulp build"
   },
   "homepage": "https://github.com/thecodercoder/frontend-boilerplate#readme",
-  "devDependencies": {
-    "autoprefixer": "^10.4.14",
-    "cssnano": "^6.0.0",
-    "gulp": "^4.0.2",
-    "gulp-concat": "^2.6.1",
-    "gulp-flatmap": "1.0.2",
-    "gulp-optimize-js": "1.1.0",
-    "gulp-postcss": "^9.0.1",
-    "gulp-replace": "^1.1.4",
-    "gulp-sass": "^5.1.0",
-    "gulp-sourcemaps": "^3.0.0",
-    "gulp-svgmin": "4.1.0",
-    "gulp-svgo": "2.2.1",
-    "gulp-uglify": "^3.0.2",
-    "lazypipe": "1.0.2"
-  },
   "dependencies": {
-    "dart-sass": "^1.25.0"
+    "autoprefixer": "^10.4.21",
+    "cssnano": "^7.0.7",
+    "fancy-log": "^2.0.0",
+    "gulp": "^5.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-flatmap": "^1.0.2",
+    "gulp-optimize-js": "^1.1.0",
+    "gulp-postcss": "^10.0.0",
+    "gulp-replace": "^1.1.4",
+    "gulp-sass": "^6.0.1",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
+    "lazypipe": "^1.0.2",
+    "sass": "^1.89.0"
   }
 }
