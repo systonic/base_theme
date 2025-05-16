@@ -1,0 +1,48 @@
+{%
+  set classes = [
+    'block',
+    'block-' ~ configuration.provider|clean_class,
+    'block-' ~ plugin_id|clean_class,
+  ]
+%}
+
+{% if content -%}
+
+  {% if element_type -%}
+    <{{ element_type }}{{ attributes.addClass(classes) }}>
+      {{ title_suffix.contextual_links }}
+  {% endif %}
+
+  {% block wrapper %}
+    {% if wrapper_type -%}
+      <{{ wrapper_type }}{{ wrapper_attributes }}>
+    {% endif %}
+
+    {% if label %}
+      {% block label %}
+        {% if title_type -%}
+          <{{ title_type }}{{ title_attributes }}>
+        {% endif %}
+        {% block title %}
+          {{ label }}
+        {% endblock %}
+        {% if title_type -%}
+          </{{ title_type }}>
+        {% endif %}
+      {% endblock %}
+    {% endif %}
+
+    {% block content %}
+      {{ content }}
+    {% endblock %}
+
+    {% if wrapper_type -%}
+      </{{ wrapper_type }}>
+    {% endif %}
+  {% endblock %}
+
+  {% if element_type -%}
+    </{{ element_type }}>
+  {% endif %}
+
+{% endif %}

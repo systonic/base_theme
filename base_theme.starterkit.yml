@@ -1,0 +1,6 @@
+ignore:
+  - '/base_theme.starterkit.yml'
+no_edit: []
+no_rename: []
+info:
+  version: 1.0.0

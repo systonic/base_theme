@@ -1,0 +1,11 @@
+custom:
+  version: VERSION
+  css:
+    theme:
+      dist/css/styles.css: { minified: true }
+  js:
+    dist/js/scripts.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once

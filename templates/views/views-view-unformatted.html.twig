@@ -1,0 +1,18 @@
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+
+{% for row in rows %}
+  {% if default_row_class %}
+    {% set row_classes = ['views-row'] %}
+  {% endif %}
+
+  {% if row.attributes is not empty or row_classes %}
+    <div{{ row.attributes.addClass(row_classes) }}>
+  {% endif %}
+  {{- row.content -}}
+  {% if row.attributes is not empty or row_classes %}
+    </div>
+  {% endif %}
+
+{% endfor %}

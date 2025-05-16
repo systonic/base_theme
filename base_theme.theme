@@ -1,0 +1,215 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming.
+ */
+
+use Drupal\image\Entity\ImageStyle;
+
+/**
+ * Set theme CSS on top of all other CSS files.
+ */
+function base_theme_css_alter(&$css, $assets) {
+  $base_css = \Drupal::service('extension.list.theme')->getPath('base_theme') . '/dist/css/styles.css';
+
+  if (isset($css[$base_css])) {
+    $css[$base_css]['group'] = 300;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function base_theme_preprocess(&$variables, $hook) {
+  $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
+  $variables['site_settings'] = \Drupal::config('system.site');
+  $variables['base_settings'] = \Drupal::entityTypeManager()->getStorage('config_pages')->load('configurations');
+
+  if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    $variables['content_type'] = $node->bundle();
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function base_theme_preprocess_node(&$variables) {
+  if (isset($variables['content']['title']['#access'])) {
+    $variables['content']['title']['#access'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function base_theme_preprocess_form(&$variables) {
+  $request = \Drupal::request();
+  $route_match = \Drupal::routeMatch();
+  $variables['page_title'] = \Drupal::service('title_resolver')->getTitle($request, $route_match->getRouteObject());
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function base_theme_preprocess_media(&$variables) {
+  if ($variables['media']->bundle() === 'image') {
+    if (isset($variables['content']['field_media_images'])) {
+      $variables['content']['field_media_images']['#access'] = FALSE;
+    }
+
+    $srcset = [];
+
+    foreach ($variables['media']->field_media_images as $key => $image) {
+      $dimensions = ['width' => $image->width, 'height' => $image->height];
+      $image_uri = $image->entity->getFileUri();
+      $image_url = \Drupal::service('file_url_generator')->generateAbsoluteString($image_uri);
+
+      if (!empty($variables['content']['field_media_images'][$key]['#image_style'])) {
+        $image_style = ImageStyle::load($variables['content']['field_media_images'][$key]['#image_style']);
+        $image_style->transformDimensions($dimensions, $image_uri);
+        if ($image_style->supportsUri($image_uri)) {
+          $image_url = $image_style->buildUrl($image_uri);
+        }
+      }
+
+      $srcset[] = $image_url . ' ' . $dimensions['width'] . 'w';
+    }
+
+    $image = $variables['media']->field_media_image;
+    $dimensions = ['width' => $image->width, 'height' => $image->height];
+    $image_uri = $image->entity->getFileUri();
+    $image_url = \Drupal::service('file_url_generator')->generateAbsoluteString($image_uri);
+
+    if (!empty($variables['content']['field_media_image'][0]['#image_style'])) {
+      $image_style = ImageStyle::load($variables['content']['field_media_image'][0]['#image_style']);
+      $image_style->transformDimensions($dimensions, $image_uri);
+      if ($image_style->supportsUri($image_uri)) {
+        $image_url = $image_style->buildUrl($image_uri);
+      }
+    }
+
+    $srcset[] = $image_url . ' ' . $dimensions['width'] . 'w';
+
+    if (count($srcset) > 1) {
+      $variables['content']['field_media_image'][0]['#item_attributes']['srcset'] = implode(', ', $srcset);
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_image_widget().
+ */
+function base_theme_preprocess_image_widget(array &$variables): void {
+  $data = &$variables['data'];
+
+  // This prevents image widget templates from rendering preview container HTML
+  // to users that do not have permission to access these previews.
+  // @todo revisit in https://drupal.org/node/953034
+  // @todo revisit in https://drupal.org/node/3114318
+  if (isset($data['preview']['#access']) && $data['preview']['#access'] === FALSE) {
+    unset($data['preview']);
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function base_theme_preprocess_file_video(&$variables) {
+  if (isset($variables['attributes']['width']) && $variables['attributes']['width']->value() == 0) {
+    $variables['attributes']->removeAttribute('width');
+  }
+  if (isset($variables['attributes']['height']) && $variables['attributes']['height']->value() == 0) {
+    $variables['attributes']->removeAttribute('height');
+  }
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function base_theme_theme_registry_alter(&$theme_registry) {
+  if (isset($theme_registry['breadcrumb'])) {
+    if ($key = array_search('gin_preprocess_breadcrumb', $theme_registry['breadcrumb']['preprocess functions'])) {
+      unset($theme_registry['breadcrumb']['preprocess functions'][$key]);
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function base_theme_theme_suggestions_page_alter(&$suggestions, array $variables) {
+  if (isset($variables['content_type'])) {
+    $suggestions[] = $variables['theme_hook_original'] . '__node__' . $variables['content_type'];
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function base_theme_theme_suggestions_container_alter(&$suggestions, array &$variables) {
+  $type = $name = $display = '';
+
+  if (empty($suggestions) && isset($variables['element']['#type']) && $variables['element']['#type'] !== 'container') {
+
+    $type = $variables['element']['#type'];
+    if (!array_search($variables['theme_hook_original'] . '__' . $type, $suggestions)) {
+      $suggestions[] = $variables['theme_hook_original'] . '__' . $type;
+    }
+
+    if (isset($variables['element']['#name'])) {
+      $name = $variables['element']['#name'];
+      $suggestions[] = $variables['theme_hook_original'] . '__' . $type . '__' . $name;
+
+      if (isset($variables['element']['#view_display_plugin_id'])) {
+        $display = $variables['element']['#view_display_plugin_id'];
+        $suggestions[] = $variables['theme_hook_original'] . '__' . $type . '__' . $name . '__' . $display;
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function base_theme_theme_suggestions_form_alter(&$suggestions, array &$variables) {
+  foreach (array_reverse($variables['element']['#theme']) as $theme) {
+    array_unshift($suggestions, 'form__' . $theme);
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function base_theme_theme_suggestions_input_alter(&$suggestions, array $variables) {
+  $element = $variables['element'];
+
+  if (isset($element['#attributes']['data-twig-suggestion'])) {
+    $suggestions[] = 'input__' . $element['#type'] . '__' . $element['#attributes']['data-twig-suggestion'];
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function base_theme_theme_suggestions_bef_links_alter(&$suggestions, array &$variables) {
+  if (isset($variables['element']['#context']['#view_id'])) {
+    $suggestions[] = $variables['theme_hook_original'] . '__' . $variables['element']['#context']['#view_id'];
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function base_theme_theme_suggestions_field_alter(&$suggestions, array &$variables) {
+  $base = $variables['theme_hook_original'] . '__' . $variables['element']['#entity_type'];
+  $bundle = $base . '__' . $variables['element']['#bundle'];
+  $new = $bundle . '__' . $variables['element']['#view_mode'];
+  if ($key = array_search($bundle, $suggestions)) {
+    array_splice($suggestions, ++$key, 0, $new);
+  }
+  else {
+    $suggestions[] = $new;
+  }
+  $suggestions[] = $base . '__' . $variables['element']['#field_name'] . '__' . $variables['element']['#bundle'] . '__' . $variables['element']['#view_mode'];
+}

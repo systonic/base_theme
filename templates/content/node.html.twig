@@ -1,0 +1,47 @@
+{%
+  set classes = [
+    'node',
+    'node--type-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'node--promoted',
+    node.isSticky() ? 'node--sticky',
+    not node.isPublished() ? 'node--unpublished',
+    view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
+  ]
+%}
+
+{% if (tag ?? true) == true -%}
+  <{{ tag_type|default('article') }}{{ attributes.addClass(classes) }}>
+    {{ title_suffix.contextual_links }}
+{% endif %}
+
+{% block wrapper %}
+  {% if wrapper_type -%}
+    <{{ wrapper_type }}{{ wrapper_attributes }}>
+  {% endif %}
+
+  {% if label and not page %}
+    {% block title %}
+      <{{ title_type|default('h2') }}{{ title_attributes }}>
+        {{ label }}
+      </{{ title_type|default('h2') }}>
+    {% endblock %}
+  {% endif %}
+
+  {% block content %}
+    {% if content_attributes is not empty -%}
+      <{{ content_type|default('div') }}{{ content_attributes }}>
+    {% endif %}
+      {{ content }}
+    {% if content_attributes is not empty -%}
+      </{{ content_type|default('div') }}>
+    {% endif %}
+  {% endblock %}
+
+  {% if wrapper_type -%}
+    </{{ wrapper_type }}>
+  {% endif %}
+{% endblock %}
+
+{% if (tag ?? true) == true -%}
+  </{{ tag_type|default('article') }}>
+{% endif %}

@@ -1,0 +1,29 @@
+<div id="page" class="layout-container">
+
+  <header role="banner">
+    <div class="wrapper">
+      {{ page.header }}
+    </div>
+  </header>
+
+  <main role="main">
+    <a id="main-content" tabindex="-1"></a>
+
+    {{ page.content_above }}
+
+    <div id="content" class="layout-content">
+      <div class="wrapper">
+        {{ page.content }}
+      </div>
+    </div>
+
+    {{ page.content_below }}
+  </main>
+
+  <footer role="contentinfo">
+    <div class="wrapper">
+      {{ page.footer }}
+    </div>
+  </footer>
+
+</div>

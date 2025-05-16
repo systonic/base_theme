@@ -1,0 +1,22 @@
+name: Systonic base theme
+type: theme
+'base theme': gin
+core_version_requirement: ^11
+hidden: true
+version: VERSION
+
+libraries:
+  - base_theme/custom
+
+regions:
+  page_top: 'Page top'
+  header: Header
+  content_above: 'Content Above'
+  content: Content
+  content_below: 'Content Below'
+  footer: Footer
+  page_bottom: 'Page bottom'
+  disabled: Disabled
+
+ckeditor5-stylesheets:
+  - dist/css/ckeditor.css

@@ -1,0 +1,48 @@
+{%
+  set classes = [
+    'field',
+    'field--name-' ~ field_name|clean_class,
+    label_display == 'inline' ? 'clearfix',
+  ]
+%}
+
+{%
+  set title_classes = [
+    label_display == 'visually_hidden' ? 'visually-hidden',
+  ]
+%}
+
+{% if (tag ?? true) == true -%}
+  <{{ tag_type|default('div') }}{{ attributes.addClass(classes) }}>
+    {{ title_suffix.contextual_links }}
+{%- endif %}
+
+{% if not label_hidden -%}
+  <{{ title_type|default('span') }}{{ title_attributes.addClass(title_classes) }}>{{ label }}</{{ title_type|default('span') }}>
+{%- endif %}
+
+{% if multiple and (list ?? false) == true -%}
+  <{{ list_type|default('ul') }}{{ list_attributes }}>
+{%- endif %}
+
+{% for item in items %}
+  {% if multiple and (list ?? false) == true -%}
+    <{{ item_type|default('li') }}{{ item.attributes.addClass(item_class) }}>
+  {%- endif %}
+
+  {% block content %}
+    {{ item.content | merge({'#theming_options': element['#theming_options']}) }}
+  {% endblock %}
+
+  {% if multiple and (list ?? false) == true -%}
+    </{{ item_type|default('li') }}>
+  {%- endif %}
+{% endfor %}
+
+{% if multiple and (list ?? false) == true -%}
+  </{{ list_type|default('ul') }}>
+{%- endif %}
+
+{% if (tag ?? true) == true -%}
+  </{{ tag_type|default('div') }}>
+{%- endif %}

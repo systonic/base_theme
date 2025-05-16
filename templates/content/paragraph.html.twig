@@ -1,0 +1,33 @@
+{%
+  set classes = [
+    'paragraph',
+    'paragraph--type--' ~ paragraph.bundle|clean_class,
+    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+    not paragraph.isPublished() ? 'paragraph--unpublished'
+  ]
+%}
+{% block paragraph %}
+  {% if content %}
+    {% if (tag ?? true) == true -%}
+      <{{ tag_type|default('div') }}{{ attributes.addClass(classes) }}>
+    {% endif %}
+
+    {% block wrapper %}
+      {% if wrapper_type -%}
+        <{{ wrapper_type }}{{ wrapper_attributes }}>
+      {% endif %}
+
+      {% block content %}
+        {{ content }}
+      {% endblock %}
+
+      {% if wrapper_type -%}
+        </{{ wrapper_type }}>
+      {% endif %}
+    {% endblock %}
+
+    {% if (tag ?? true) == true -%}
+      </{{ tag_type|default('div') }}>
+    {% endif %}
+  {% endif %}
+{% endblock paragraph %}
