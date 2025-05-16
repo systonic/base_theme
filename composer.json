@@ -1,0 +1,18 @@
+{
+    "name": "systonic/base_theme",
+    "description": "Drupal base theme.",
+    "type": "drupal-theme",
+    "keywords": ["php", "drupal", "theme"],
+    "homepage": "https://github.com/systonic/base_theme",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Sylvain Larras"
+        }
+    ],
+    "require": {
+        "drupal/core": "~11"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
