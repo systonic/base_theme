@@ -1,26 +1,33 @@
 {% import _self as menus %}
 
-{{ menus.menu_links(items, attributes, 0) }}
+{{ menus.menu_links(items, attributes, 0, _context) }}
 
-{% macro menu_links(items, attributes, menu_level) %}
-  {% import _self as menus %}
+{% macro menu_links(items, attributes, menu_level, context) %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul{{ attributes.addClass('menu') }}>
+      <ul{{ attributes }}>
     {% else %}
-      <ul class="menu">
+      <ul>
     {% endif %}
     {% for item in items %}
       {%
         set classes = [
-          'menu-item',
-          item.is_expanded ? 'menu-item--expanded',
-          item.is_collapsed ? 'menu-item--collapsed',
-          item.in_active_trail ? 'menu-item--active-trail',
+          item.is_expanded ? 'expanded',
+          item.is_collapsed ? 'collapsed',
+          item.in_active_trail ? 'active-trail',
         ]
       %}
       <li{{ item.attributes.addClass(classes) }}>
-        {{ link(item.title, item.url) }}
+        {% set title %}
+          {% if (context.title_wrapper ?? false) == true -%}
+            <{{ context.title_type|default('span') }}>
+          {% endif %}
+          {{ item.title }}
+          {% if (context.title_wrapper ?? false) == true -%}
+            </{{ context.title_type|default('span') }}>
+          {% endif %}
+        {% endset %}
+        {{ link(title, item.url) }}
         {% if item.below %}
           {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
         {% endif %}

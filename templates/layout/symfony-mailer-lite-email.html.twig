@@ -1,0 +1,173 @@
+{% if is_html %}
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+  <head>
+    <title>{{ subject }}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <style type="text/css">
+      body, table, td, a {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+      table, td {
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+      img {
+        -ms-interpolation-mode: bicubic;
+      }
+      img {
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+      }
+      table {
+        border-collapse: collapse !important;
+      }
+      body {
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+      }
+      div, button, img {
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        display: block !important;
+      }
+      a {
+        text-decoration: none;
+      }
+      a:visited {
+        text-decoration: none;
+      }
+      a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+      }
+      @media screen and (max-width: 600px) {
+        .img-max {
+          width: 100% !important;
+          max-width: 100% !important;
+          height: auto !important;
+        }
+        .logo {
+          width: 100% !important;
+          max-width: 320px !important;
+          height: auto !important;
+        }
+        .cache {
+          display: none !important;
+          visibility: hidden;
+          font-size: 0;
+          height: 0;
+        }
+        .mobile-wrapper {
+          width: 95% !important;
+          max-width: 95% !important;
+        }
+        .mobile-padding {
+          padding-left: 5% !important;
+          padding-right: 5% !important;
+        }
+        .mobile-table {
+          width: 100% !important;
+        }
+      }
+    </style>
+    <!--[if gte mso 9]>
+      <xml>
+        <o:OfficeDocumentSettings>
+        <o:AllowPNG/>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+    <![endif]-->
+  </head>
+  <body style="margin:0 !important; padding:0 !important; background-color:{{ bg_color }};" bgcolor="{{ bg_color }}">
+    <div{{ attributes }}>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td height="10" style="font-size:10px; line-height:10px; mso-line-height-rule:exactly; background-color:{{ bg_color }};" bgcolor="{{ bg_color }}">&nbsp;</td>
+        </tr>
+      </table>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td align="center" height="100%" valign="top" width="100%" bgcolor="{{ bg_color }}" class="mobile-padding">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="640" class="mobile-wrapper" style="width:640px;">
+              <tr>
+                <td align="center" valign="top" style="font-family:{{ font_family }};" bgcolor="{{ bg_color }}">
+                  <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td bgcolor="{{ fg_color }}" height="20">&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td align="center" bgcolor="{{ fg_color }}"><a href="{{ url('<front>') }}" target="_blank"><img src="{{ drupal_url(site_logo, {'absolute': true}) }}" alt="" name="OWATemporaryImageDivContainer1" id="OWATemporaryImageDivContainer1" width="{{ base_settings.field_logo_width.value }}" height="{{ base_settings.field_logo_height.value }}" class="logo" style="display:block; border:none; background-color:{{ fg_color }}; color:{{ fg_font_color }}; font-size:19px; text-align:center; vertical-align:middle; font-family:{{ font_family }}; width:{{ base_settings.field_logo_width.value }}px; height:{{ base_settings.field_logo_height.value }}px;" /></a></td>
+                    </tr>
+                    <tr>
+                      <td bgcolor="{{ fg_color }}" height="40">&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td align="center" bgcolor="{{ fg_color }}">
+                        <table cellspacing="0" cellpadding="0" border="0" width="86%" align="center" role="presentation">
+                          <tr>
+                            <td bgcolor="{{ fg_color }}" style="font-family:{{ font_family }}; color:{{ fg_font_color }}; font-size:16px; text-align:left;">
+                              {{ body }}
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" bgcolor="{{ fg_color }}" height="20">&nbsp;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td align="center" height="100%" valign="top" width="100%" bgcolor="{{ bg_color }}" class="mobile-padding">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="640" class="mobile-wrapper" style="width:640px;">
+              <tr>
+                <td align="center" valign="top" style="font-family:{{ font_family }};" bgcolor="{{ bg_color }}">
+                  <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td bgcolor="{{ bg_color }}" height="20">&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td bgcolor="{{ bg_color }}" style="font-size:12px; font-family:{{ font_family }}; color:{{ bg_font_color }};" align="center">&copy;&nbsp;Copyright - {{ site_name }}</td>
+                    </tr>
+                    <tr>
+                      <td bgcolor="{{ bg_color }}" height="20">&nbsp;</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td height="10" style="font-size:10px; line-height:10px; mso-line-height-rule:exactly; background-color:{{ bg_color }};" bgcolor="{{ bg_color }}">&nbsp;</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
+{% else %}
+  {{ body }}
+{% endif %}

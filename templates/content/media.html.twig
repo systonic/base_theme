@@ -6,10 +6,17 @@
     view_mode ? 'media--view-mode-' ~ view_mode|clean_class,
   ]
 %}
+
 {% if content %}
-  <{{ tag_type|default('div') }}{{ attributes.addClass(classes) }}>
-    {% block content %}
-      {{ content }}
-    {% endblock %}
-  </{{ tag_type|default('div') }}>
+  {% if (tag ?? true) == true -%}
+    <{{ tag_type|default('div') }}{{ attributes.addClass(classes) }}>
+  {% endif %}
+
+  {% block content %}
+    {{ content }}
+  {% endblock %}
+
+  {% if (tag ?? true) == true -%}
+    </{{ tag_type|default('div') }}>
+  {% endif %}
 {% endif %}

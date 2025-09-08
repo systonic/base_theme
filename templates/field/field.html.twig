@@ -27,7 +27,7 @@
 
 {% for item in items %}
   {% if multiple and (list ?? false) == true -%}
-    <{{ item_type|default('li') }}{{ item.attributes.addClass(item_class) }}>
+    <{{ item_type|default('li') }}{{ create_attribute(item.attributes | merge(item_attributes)) }}>
   {%- endif %}
 
   {% block content %}

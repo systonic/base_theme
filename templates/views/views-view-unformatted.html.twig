@@ -10,9 +10,10 @@
   {% if row.attributes is not empty or row_classes %}
     <div{{ row.attributes.addClass(row_classes) }}>
   {% endif %}
-  {{- row.content -}}
+  {% block content %}
+    {{- row.content -}}
+  {% endblock %}
   {% if row.attributes is not empty or row_classes %}
     </div>
   {% endif %}
-
 {% endfor %}

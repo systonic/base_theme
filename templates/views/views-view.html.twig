@@ -8,32 +8,42 @@
   ]
 %}
 
-<div{{ attributes.addClass(classes) }}>
-
-  {{ title_prefix }}
-  {% if view.display_handler.pluginId == 'page' %}
-    <h1>{{ view.getTitle() }}</h1>
-  {% else %}
-    {{ title }}
+{% block views %}
+  {% if (tag ?? true) == true -%}
+    <{{ tag_type|default('div') }}{{ attributes.addClass(classes) }}>
   {% endif %}
-  {{ title_suffix }}
 
-  {% if header %}
-    <header>
-      {{ header }}
-    </header>
-  {% endif %}
+  {% block title %}
+    {% if view.getTitle() or title -%}
+      {{ title_prefix }}
+      {% if view.display_handler.pluginId == 'page' %}
+        <h1>{{ view.getTitle() }}</h1>
+      {% else %}
+        {{ title }}
+      {% endif %}
+      {{ title_suffix }}
+    {% endif %}
+  {% endblock %}
+
+  {% block header %}
+    {% if header %}
+      <header>
+        {{ header }}
+      </header>
+    {% endif %}
+  {% endblock %}
 
   {% if (more_on_top ?? false) == true %}
     {{ more }}
   {% endif %}
 
-  {{ exposed }}
+  {% block exposed %}
+    {{ exposed }}
+  {% endblock %}
 
   {{ attachment_before }}
 
   {% block content %}
-
     {% if rows -%}
       <div class="view-content">
         {{ rows }}
@@ -41,22 +51,27 @@
     {% elseif empty -%}
       {{ empty }}
     {% endif %}
-
   {% endblock %}
 
   {{ attachment_after }}
 
   {{ pager }}
 
-  {% if (more_on_top ?? false) == false %}
+  {% if (more_on_bottom ?? true) == true %}
     {{ more }}
   {% endif %}
 
-  {% if footer %}
-    <footer>
-      {{ footer }}
-    </footer>
-  {% endif %}
+  {% block footer %}
+    {% if footer %}
+      <footer>
+        {{ footer }}
+      </footer>
+    {% endif %}
+  {% endblock %}
 
   {{ feed_icons }}
-</div>
+
+  {% if (tag ?? true) == true -%}
+    </{{ tag_type|default('div') }}>
+  {% endif %}
+{% endblock %}

@@ -11,7 +11,9 @@
 
 {% if (tag ?? true) == true -%}
   <{{ tag_type|default('article') }}{{ attributes.addClass(classes) }}>
-    {{ title_suffix.contextual_links }}
+    {% if (contextual ?? true) == true -%}
+      {{ title_suffix.contextual_links }}
+    {% endif %}
 {% endif %}
 
 {% block wrapper %}
@@ -31,7 +33,11 @@
     {% if content_attributes is not empty -%}
       <{{ content_type|default('div') }}{{ content_attributes }}>
     {% endif %}
+    {% if is_front %}
+      {{ content | without('title') }}
+    {% else %}
       {{ content }}
+    {% endif %}
     {% if content_attributes is not empty -%}
       </{{ content_type|default('div') }}>
     {% endif %}
