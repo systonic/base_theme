@@ -55,10 +55,14 @@
 
   {{ attachment_after }}
 
-  {{ pager }}
+  {% block pager %}
+    {{ pager }}
+  {% endblock %}
 
   {% if (more_on_bottom ?? true) == true %}
-    {{ more }}
+    {% block more %}
+      {{ more }}
+    {% endblock %}
   {% endif %}
 
   {% block footer %}

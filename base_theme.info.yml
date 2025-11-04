@@ -20,3 +20,24 @@ regions:
 
 ckeditor5-stylesheets:
   - dist/css/ckeditor.css
+
+libraries-override:
+  gin/gin:
+    css:
+      theme:
+        dist/css/base/gin.css: false
+  core/normalize:
+    css:
+      base:
+        assets/vendor/normalize-css/normalize.css: false
+  claro/global-styling:
+    css:
+      base:
+        css/base/elements.css: false
+      component:
+        css/components/fieldset.css: false
+        css/components/form.css: false
+  claro/views:
+    css:
+      component:
+        css/components/views-exposed-form.css: false

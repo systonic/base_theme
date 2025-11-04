@@ -1,12 +1,12 @@
-<div id="search-results">
+<div id="search-results" class="section section-small">
+  {% if search_title %}
+    <h1 class="t2">{{ search_title }}</h1>
+  {% endif %}
+
   {{ form }}
 
   {% if no_of_results %}
     <p class="nbresults">{{ no_of_results }}</p>
-  {% endif %}
-
-  {% if search_title %}
-    <h2>{{ search_title }}</h2>
   {% endif %}
 
   {{ no_results_found }}

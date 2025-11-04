@@ -1,0 +1,6 @@
+{% extends "paragraph.html.twig" %}
+{% set tag = false %}
+
+{% block content %}
+  {{ content.field_media.0 | with('#legende', paragraph.field_legende.value) }}
+{% endblock %}

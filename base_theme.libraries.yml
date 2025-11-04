@@ -4,7 +4,7 @@ custom:
     theme:
       dist/css/styles.css: { minified: true }
   js:
-    dist/js/scripts.js: {}
+    dist/javascripts/scripts.js: {}
   dependencies:
     - core/jquery
     - core/drupal

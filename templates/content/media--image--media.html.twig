@@ -1,0 +1,19 @@
+{% extends "media.html.twig" %}
+{% set tag_type = "figure" %}
+{#% set attributes = attributes.addClass(['full-width']) %#}
+
+{% block content %}
+  <picture>
+    {% if elements['#sources'] %}
+      {% for source in elements['#sources'] %}
+        <source srcset="{{ source.srcset }}" media="(max-width: {{ source.media }}px)" />
+      {% endfor %}
+    {% endif %}
+    {{ content.field_media_image.0 }}
+  </picture>
+  {% if media.thumbnail.alt and elements['#legende'] %}
+    <figcaption>
+      {{ media.thumbnail.alt }}
+    </figcaption>
+  {% endif %}
+{% endblock %}

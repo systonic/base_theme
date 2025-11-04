@@ -1,0 +1,20 @@
+{% extends "media.html.twig" %}
+{% set attributes = attributes.addClass(['full-width', 'video-player']) %}
+
+{% block content %}
+  <a href="#" class="play-video" data-video="{{ media | file_url }}">
+    <span class="picto">
+      <svg viewBox="0 0 110 110" fill="none"><use xlink:href="#svg-play-video"></use></svg>
+    </span>
+    <figure>
+      <picture>
+        <img src="{{ media.thumbnail | file_url }}" alt="">
+      </picture>
+      {% if name and elements['#legende'] %}
+        <figcaption>
+          {{ name }}
+        </figcaption>
+      {% endif %}
+    </figure>
+  </a>
+{% endblock %}

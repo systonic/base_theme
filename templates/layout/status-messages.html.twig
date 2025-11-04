@@ -1,0 +1,56 @@
+<div data-drupal-messages class="messages-list">
+  <div class="messages__wrapper">
+    {% for type, messages in message_list %}
+      {%
+        set classes = [
+          'messages-list__item',
+          'messages',
+          'messages--' ~ type,
+          'popin',
+        ]
+      %}
+      {%
+        set is_message_with_title = status_headings[type]
+      %}
+      {%
+        set is_message_with_icon = type in ['error', 'status', 'warning']
+      %}
+
+      <dialog role="contentinfo" aria-labelledby="{{ title_ids[type] }}"{{ attributes.addClass(classes)|without('role', 'aria-label') }}>
+        {% if is_message_with_title or is_message_with_icon %}
+          <div class="messages__header">
+            {% if is_message_with_title %}
+              <h2 id="{{ title_ids[type] }}" class="messages__title">
+                {{ status_headings[type] }}
+              </h2>
+            {% endif %}
+          </div>
+        {% endif %}
+        <div class="messages__content">
+          {% if messages|length > 1 %}
+            <ul class="messages__list">
+              {% for message in messages %}
+                <li class="messages__item">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            {{ messages|first }}
+          {% endif %}
+        </div>
+        <form method="dialog" class="close-dialog">
+          <button>Close</button>
+        </form>
+        {#<button type="button" class="button button--dismiss js-message-button-hide" title="{{ 'Hide'|t }}">
+          <span class="icon-close"></span>
+          {{ 'Hide'|t }}
+        </button>#}
+      </dialog>
+      <script>
+        var dialog = document.querySelector('dialog.messages');
+        dialog.showModal();
+      </script>
+      {# Remove type specific classes. #}
+      {% set attributes = attributes.removeClass(classes) %}
+    {% endfor %}
+  </div>
+</div>

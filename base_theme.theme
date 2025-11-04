@@ -31,6 +31,14 @@ function base_theme_preprocess(&$variables, $hook) {
   if ($node = \Drupal::routeMatch()->getParameter('node')) {
     $variables['content_type'] = $node->bundle();
   }
+
+  if (isset($variables['elements']['#tag'])) {
+    $variables['tag'] = $variables['elements']['#tag'];
+  }
+  if (isset($variables['element']['#tag'])) {
+    $variables['tag'] = $variables['element']['#tag'];
+  }
+
 }
 
 /**
@@ -102,6 +110,7 @@ function base_theme_preprocess_media(&$variables) {
     }
 
     $srcset = [];
+    $sources = [];
 
     foreach ($variables['media']->field_media_images as $key => $image) {
       $dimensions = ['width' => $image->width, 'height' => $image->height];
@@ -117,6 +126,10 @@ function base_theme_preprocess_media(&$variables) {
       }
 
       $srcset[] = $image_url . ' ' . $dimensions['width'] . 'w';
+      $sources[] = [
+        'srcset' => $image_url,
+        'media' => $dimensions['width'],
+      ];
     }
 
     $image = $variables['media']->field_media_image;
@@ -133,11 +146,18 @@ function base_theme_preprocess_media(&$variables) {
     }
 
     $srcset[] = $image_url . ' ' . $dimensions['width'] . 'w';
+    $sources[] = [
+      'srcset' => $image_url,
+      'media' => $dimensions['width'],
+    ];
+
+    array_multisort(array_column($sources, 'media'), $sources);
 
     if (count($srcset) > 1) {
-      $variables['content']['field_media_image'][0]['#item_attributes']['srcset'] = implode(', ', $srcset);
+      //$variables['content']['field_media_image'][0]['#item_attributes']['srcset'] = implode(', ', $srcset);
       $variables['content']['field_media_image'][0]['#item_attributes']['width'] = '';
       $variables['content']['field_media_image'][0]['#item_attributes']['height'] = '';
+      $variables['elements']['#sources'] = $sources;
     }
   }
 }
